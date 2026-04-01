@@ -1,0 +1,8 @@
+{
+  "last_updated": "2026-01-01",
+  "goals": ["Define your goals here"],
+  "preferences": {},
+  "rules": [
+    "Add rules the agent should always follow"
+  ]
+}

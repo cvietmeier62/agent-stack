@@ -1,0 +1,7 @@
+claude-agent-sdk
+fastapi
+uvicorn[standard]
+pyyaml
+httpx
+pytest
+pytest-asyncio

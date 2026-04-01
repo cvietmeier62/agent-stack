@@ -1,0 +1,48 @@
+name: Test Harness
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install harness dependencies
+        run: pip install -r harness/requirements.txt
+
+      - name: Run config tests
+        run: cd harness && python -m pytest test_harness.py -k "config" -v
+
+      - name: Verify template structure
+        run: |
+          test -f template/CLAUDE.md
+          test -f template/.claude/skills/example/SKILL.md
+          test -f template/data/strategy.json
+          echo "Template structure OK"
+
+      - name: Verify example agents
+        run: |
+          for agent in examples/*/; do
+            test -f "${agent}CLAUDE.md" || (echo "Missing CLAUDE.md in ${agent}" && exit 1)
+            test -d "${agent}.claude/skills" || (echo "Missing skills in ${agent}" && exit 1)
+            echo "✓ ${agent}"
+          done
+          echo "All examples OK"
+
+      - name: Verify portable skills
+        run: |
+          for skill in skills/*/; do
+            test -f "${skill}SKILL.md" || (echo "Missing SKILL.md in ${skill}" && exit 1)
+            echo "✓ ${skill}"
+          done
+          echo "All skills OK"

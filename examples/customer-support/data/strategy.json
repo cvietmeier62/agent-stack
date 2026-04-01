@@ -1,0 +1,53 @@
+{
+  "sla_targets": {
+    "first_response_minutes": 60,
+    "resolution_hours": 24,
+    "first_response_sla_percent": 95,
+    "resolution_sla_percent": 90
+  },
+  "escalation_thresholds": {
+    "no_escalation_max": 3.0,
+    "soft_escalation_max": 5.0,
+    "escalation_max": 7.0,
+    "urgent_above": 7.0,
+    "single_trigger_auto_escalate": 8
+  },
+  "tone_preferences": {
+    "default": "professional-warm",
+    "frustrated_customer": "empathetic-reassuring",
+    "angry_customer": "calm-acknowledging",
+    "positive_customer": "friendly-efficient",
+    "max_response_words": 200,
+    "use_customer_first_name": true,
+    "avoid_phrases": [
+      "Dear Customer",
+      "Per our policy",
+      "Unfortunately we cannot",
+      "As previously stated"
+    ]
+  },
+  "auto_close_rules": {
+    "waiting_customer_days": 7,
+    "resolved_to_closed_days": 3,
+    "auto_close_message": "This ticket has been automatically closed after {days} days without a response. If you still need help, please reply to reopen it."
+  },
+  "priority_escalation_map": {
+    "critical": "team-lead",
+    "high": "senior-support",
+    "medium": "standard",
+    "low": "standard"
+  },
+  "team_routing": {
+    "billing": "billing-team",
+    "technical": "engineering-support",
+    "account-access": "standard",
+    "feature-request": "product-team",
+    "bug-report": "engineering-support",
+    "general": "standard"
+  },
+  "metrics_targets": {
+    "resolution_rate_percent": 85,
+    "escalation_rate_max_percent": 15,
+    "customer_satisfaction_min": 4.0
+  }
+}

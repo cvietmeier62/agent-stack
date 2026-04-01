@@ -1,0 +1,17 @@
+{
+  "agent_dir": null,
+  "api_keys": [],
+  "timeout_seconds": 600,
+  "max_turns": 50,
+  "allowed_tools": [
+    "Skill", "Read", "Write", "Bash", "Glob",
+    "Grep", "WebSearch", "WebFetch", "Agent"
+  ],
+  "cors_origins": ["http://localhost:3000", "http://localhost:3001", "http://localhost:3002"],
+  "port": 8000,
+  "metadata": {
+    "name": "Universal Agent Harness",
+    "version": "1.0.0",
+    "description": "Point AGENT_DIR at any folder with .claude/skills/ and CLAUDE.md. Get an agent."
+  }
+}

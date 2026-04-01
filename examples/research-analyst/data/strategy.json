@@ -1,0 +1,14 @@
+{
+  "last_updated": "2026-01-01",
+  "minimum_sources": 3,
+  "credibility_threshold": 6,
+  "preferred_source_types": ["academic", "primary", "official", "reputable_news"],
+  "citation_format": "inline_with_url",
+  "recency_preference": "prefer_last_2_years",
+  "bias_sensitivity": "high",
+  "confidence_levels": {
+    "high": "3+ credible sources agree, no significant contradictions",
+    "medium": "2+ sources agree, minor contradictions or limited data",
+    "low": "single source, significant contradictions, or outdated data"
+  }
+}
