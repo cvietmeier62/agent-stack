@@ -1,0 +1,11 @@
+node_modules/
+.next/
+.env*.local
+.vercel
+*.tsbuildinfo
+__pycache__/
+*.pyc
+.venv/
+test-shared/
+test-users/
+/tmp/workspace-*

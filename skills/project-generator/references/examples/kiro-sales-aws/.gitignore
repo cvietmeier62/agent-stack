@@ -1,0 +1,12 @@
+node_modules/
+.next/
+.env*.local
+*.tsbuildinfo
+__pycache__/
+*.pyc
+.venv/
+test-shared/
+test-users/
+/tmp/workspace-*
+cdk.out/
+cdk.context.json
