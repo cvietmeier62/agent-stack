@@ -1,167 +1,128 @@
 ---
 name: leverage-loop
-description: "The meta-process for turning an idea into an executable system. Research deeply, deliberate via expert panel, extract decisions as rules, design the spec, task the work, execute, and learn. Use when starting any new initiative — product, feature, strategy, or decision."
+description: "Turn any intent into an executable plan. Thinks about what context is needed, gathers it, reasons through it, locks decisions as rules, and generates artifacts an agent can execute. Use when starting anything — a product, a feature, a decision, a strategy. Say /leverage-loop or 'help me think through X'."
 ---
 
 # Leverage Loop
 
-The operating system for thinking and building. Takes any intent — a product idea, a strategic decision, a problem to solve — and runs it through a structured process that produces executable artifacts (rules, specs, tasks) an AI agent can build from.
+You are Christian's thinking partner. He tells you what he wants. You figure out what you need to know, go get it, reason through it with him, and produce artifacts that make execution effortless.
 
-**The metaphor:** You're the President. You deploy your Cabinet. Each Cabinet member has teams that research deeply. Findings surface up to the secretaries (domain experts). They deliberate and make recommendations. You decide. The decisions become law (rules). The laws guide execution.
+**This is NOT a fixed pipeline.** It's a reasoning process. Some intents need deep research. Some need none. Some need expert debate. Some just need a decision locked in. The skill adapts to what's actually needed.
 
-## The 8-Step Loop
+## How It Works
 
-### Step 1: INTENT
+### 1. Listen to the Intent
 
-Start with a clear statement of what you're trying to accomplish. One sentence.
+Christian says what he wants. Could be:
+- "I want to build X"
+- "I need to figure out Y"
+- "Should I do A or B?"
+- "How do I approach Z?"
 
-Ask Christian:
-- "What are you trying to build or solve?"
-- "What does success look like?"
-- "What's the timeline?"
+**Your job:** Understand what he's actually trying to accomplish. Not just the surface request — the underlying goal. If it's unclear, ask ONE clarifying question. Not five. One.
 
-If the intent is vague, push for specificity. "Build an app" → "Build a web app that lets sales reps chat with an AI advisor that knows their accounts."
+### 2. Identify the Gaps
 
-### Step 2: RESEARCH (Deploy the Cabinet)
+Before doing anything, THINK:
 
-Gather ALL relevant context before making any decisions. This is where you go deep.
+- What do I already know about this? (From this conversation, from CLAUDE.md, from memory files, from previous sessions)
+- What does Christian already know? (He's an AWS AI Sales Specialist. He builds with Claude Code, Strands, Next.js, Vercel, Supabase. Don't research things he already knows.)
+- **What are the SPECIFIC unknowns that would change the decision?**
 
-**Launch parallel research agents** (use Agent tool for each):
+Write down the gaps. Not a generic research plan — the SPECIFIC questions that need answers. Examples:
+- "Does Strands support streaming to a FastAPI endpoint?" (specific, answerable)
+- NOT "Research Strands" (vague, wastes time)
 
-1. **Technology Researcher** — WebSearch for the latest on every technology mentioned. APIs change fast. Don't trust training data. Find official docs, GitHub repos, reference architectures.
+If there are NO gaps — Christian knows enough to decide — skip straight to Step 4.
 
-2. **Market/Domain Researcher** — WebSearch for how others have solved this. What products exist? What frameworks are people using? What's the state of the art?
+### 3. Fill the Gaps
 
-3. **Existing Asset Auditor** — Read Christian's existing code, skills, data files, MCPs, infrastructure. What can be reused? What patterns already work?
+For each specific unknown, choose the RIGHT tool:
 
-4. **Constraints Mapper** — Identify fixed constraints: what infra is available (Vercel MCP? Supabase MCP? AWS CLI?), what's the deploy target, what skills are installed, what's the timeline.
+| Gap Type | Tool |
+|----------|------|
+| "Does X support Y?" | WebSearch for the specific capability |
+| "What's the latest API for X?" | WebFetch the official docs |
+| "How did others solve X?" | WebSearch for reference implementations |
+| "What does Christian's existing code do?" | Read the relevant files |
+| "What infra does Christian have?" | Check MCPs, env vars, existing repos |
+| "Is A better than B for this use case?" | Research both, then compare |
+| "What would experts think?" | Run /panel-discussion |
 
-Each researcher outputs structured findings — not prose, not opinions. Facts, links, code patterns, verified capabilities.
+**Key:** Only research what you DON'T know. Don't research Next.js if Christian uses it daily. Don't research Supabase if the MCP is connected. Research the DELTA — the new thing, the uncertain thing, the thing that could change the decision.
 
-### Step 3: DELIBERATE (Run the Panel)
+### 4. Reason Through It
 
-Invoke `/panel-discussion` with the research findings. Assemble experts relevant to the domain.
+Present what you found to Christian. Not a data dump — a reasoned analysis:
 
-The panel should debate:
-- What's the right approach given the findings?
-- What are the real tradeoffs?
-- What decisions need to be locked in NOW vs deferred?
-- What's the simplest thing that works?
-- What are the risks?
+- "Here's what I found about X. It means Y for your situation."
+- "There are two options: A and B. Here's the tradeoff."
+- "I think Z is the right call because [specific reasons]. Push back if you disagree."
 
-The panel produces:
-- **Convergence** — what everyone agreed on (these become rules)
-- **Tensions** — tradeoffs Christian needs to decide (these become questions)
-- **Recommendations** — specific, actionable next steps
+If the decision is complex and has multiple valid paths, invoke `/panel-discussion` with the specific question and the specific findings. Don't panel everything — only panel genuine tradeoffs where smart people would disagree.
 
-### Step 4: DECIDE (Extract the Rules)
+If Christian disagrees or has additional context, incorporate it and re-reason. This is a CONVERSATION, not a presentation.
 
-Turn panel recommendations + Christian's decisions into **locked rules**.
+### 5. Lock Decisions as Rules
 
-Create `.claude/rules/` files:
-- `stack.md` — technology choices (locked, with package names and versions)
-- `conventions.md` — coding patterns, UI rules, rendering rules
-- `architecture.md` — service architecture, data flow, deployment pattern
+Once Christian decides (or agrees with your recommendation), extract the decisions into durable artifacts:
 
-**Rules are LAW.** Once written, they don't get relitigated. Every future session reads them automatically. This is how decisions compound — you decide once, and every agent that touches the project follows the decision.
+**If building a project:**
+- Create `.claude/rules/stack.md` — technology choices, locked
+- Create `.claude/rules/conventions.md` — coding patterns, locked
+- Create `.claude/rules/architecture.md` — system design, locked
 
-**Rule quality check:**
-- Is each rule specific enough to be followed without interpretation?
-- Does each rule answer a question the building agent would otherwise ask?
-- Are there fewer than 20 lines per file? (More = lower compliance)
+**If making a strategic decision:**
+- Update the relevant memory file in `~/.claude/projects/*/memory/`
+- Or create a new decision record
 
-### Step 5: DESIGN (Write the Spec)
+**If improving a process:**
+- Update or create a skill in `.claude/skills/`
 
-Turn the rules into a component-level design document.
+**The rule:** Decisions that will apply to multiple future sessions should be written down in a place that gets automatically loaded. Otherwise they get relitigated every time.
 
-Create `docs/DESIGN.md` with sections prefixed by `§`:
-- Each section covers ONE component or subsystem
-- Include: wireframe (ASCII), file paths, code patterns, API signatures
-- Include: "Research:" instructions where the stack is new or fast-moving
-- Include: reference links for each section
+### 6. Generate Artifacts (if building)
 
-**Design quality check:**
-- Does each section have enough detail for an agent to build it without asking questions?
-- Are code patterns verified (from research phase), not hallucinated?
-- Are research instructions included for any technology newer than training data?
+If the intent leads to building something, generate the execution artifacts:
 
-### Step 6: TASK (Order the Work)
+- `CLAUDE.md` — 50-60 lines, steering index
+- `docs/DESIGN.md` — component specs per section
+- `docs/TASKS.md` — ordered tasks with acceptance criteria
 
-Break the design into ordered, atomic tasks.
+Use `/scaffold-project` for this — it handles the generation and quality checks.
 
-Create `docs/TASKS.md`:
-- Group into phases (scaffold → core feature → integration → deploy → polish)
-- Each task format:
-  ```
-  - [ ] **Task N.N: Title**
-    - What to do (specific commands, file paths)
-    - Research: WebSearch "X" if needed
-    - Context: docs/DESIGN.md § Section
-    - Acceptance: verb-first testable criteria
-    - Depends on: Task N.N
-  ```
-- One task = one session's work
-- EVERY task has acceptance criteria
-- EVERY acceptance criteria starts with a VERB
+If it's NOT a build project (it's a decision, a strategy, a plan), the artifact might be:
+- A memory file documenting the decision
+- An updated CLAUDE.md with new rules
+- A skill file capturing a new capability
+- A document Christian can share with others
 
-**Task quality check:**
-- Can each task be completed without asking follow-up questions?
-- Is there a clear "done" state for each task?
-- Are dependencies explicit?
-- No circular dependencies?
+### 7. Verify and Iterate
 
-### Step 7: EXECUTE (Hand to Agent)
+After generating artifacts, ask:
+- "Does this capture what you want?"
+- "Anything I missed?"
+- "Ready to execute, or do we need to go deeper on something?"
 
-Create `CLAUDE.md` (50-60 lines) as the steering index:
-- What the project is (one paragraph)
-- "Before Starting" instructions (read TASKS.md, find next task, read DESIGN.md section, complete, mark done, stop)
-- First-time setup (skills to install)
-- Tech stack (locked, from rules)
-- Critical rules (top 5-10 from rules files)
-- Reference files (docs/PRD.md, docs/DESIGN.md, docs/TASKS.md)
+If Christian says "go deeper on X" — loop back to Step 2 with X as the new intent. The loop is recursive.
 
-Push to GitHub. Open in a fresh Claude Code session. The agent reads CLAUDE.md → TASKS.md → DESIGN.md → builds.
+## What Makes This Different From Just Chatting
 
-### Step 8: LEARN (Improve the Rules)
+Without this skill, conversations meander. Decisions get made and forgotten. Research doesn't get recorded. The next session starts from zero.
 
-After execution (or after each phase), review:
-- What rules were missing that the agent had to figure out?
-- What tasks were under-specified?
-- What research was wrong or outdated?
-- What patterns worked well and should become defaults?
+With this skill:
+- Every decision becomes a RULE that persists
+- Every research finding gets embedded in a DESIGN or PRD
+- Every task gets ACCEPTANCE CRITERIA so an agent can execute it
+- The conversation produces ARTIFACTS, not just text
 
-Update:
-- `.claude/rules/` with new rules discovered during execution
-- `~/agent-stack/skills/scaffold-project/SKILL.md` with improved defaults
-- Christian's personal defaults profile (stack preferences, conventions)
+**The compounding effect:** Each run of the leverage loop produces rules and skills that make the next run faster. After 10 runs, you have a deep set of defaults, a library of skills, and a collection of reference implementations. You're not starting from scratch — you're building on everything that came before.
 
-**The flywheel:** Each loop through the process produces better rules → better specs → faster execution → better outcomes → better rules.
+## Christian's Existing Assets (reference these, don't re-research)
 
-## When to Use Each Step
-
-| Situation | Start at |
-|-----------|----------|
-| Brand new idea, no research done | Step 1 (Intent) |
-| Idea is clear, need to validate approach | Step 2 (Research) |
-| Research done, need to decide | Step 3 (Deliberate) |
-| Decisions made, need to spec it out | Step 5 (Design) |
-| Spec exists, need to break into tasks | Step 6 (Task) |
-| Everything exists, just need to execute | Step 7 (Execute) |
-| Something failed, need to improve | Step 8 (Learn) |
-
-## The Key Insight
-
-The depth of your ROOTS (research, rules, decisions) determines the quality of your BRANCHES (code, features, products). Shallow research → vague rules → vague specs → bad code. Deep research → specific rules → precise specs → excellent code.
-
-Every minute spent in Steps 2-4 saves ten minutes in Steps 6-7. The President who deploys the best Cabinet makes the best decisions.
-
-## Portable Artifacts
-
-Each loop through the Leverage Loop produces artifacts that carry forward:
-
-- **Rules** (.claude/rules/*.md) — decisions that apply to every future session
-- **Skills** (.claude/skills/*/SKILL.md) — capabilities that work in any project
-- **Defaults** (embedded in scaffold-project) — preferences that auto-apply to new projects
-- **Reference implementations** (~/financial-engine/, ~/agent-stack/) — working code to reference
-
-The more loops you run, the faster each subsequent loop becomes. That's leverage.
+- **Infra:** Vercel (MCP connected), Supabase (MCP connected, project: theia), AWS (CLI authenticated)
+- **Stack defaults:** Next.js 16, shadcn/ui, AI Elements, dark mode, JetBrains Mono, Clerk auth
+- **Agent SDKs:** Claude Agent SDK (tested, harness built), Strands (researched, chose for AWS)
+- **Skills:** panel-discussion, agent-builder, scaffold-project, 28+ financial engine skills
+- **Repos:** agent-stack (GitHub, public), financial-engine (local), kiro-sales (GitHub, private)
+- **Knowledge:** AI sales (AWS), agent architecture, markdown skills pattern, S3 Files, AgentCore
