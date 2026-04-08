@@ -26,6 +26,13 @@ Orchestrator skill that produces a complete project spec — the same 7-file sys
 └── .gitignore
 ```
 
+## Before Generating: Read Examples
+
+Read `references/examples/INDEX.md` first. It links to REAL outputs from projects Christian built. Use them to calibrate quality — your output should match their specificity, conciseness, and structure.
+
+- **Simple project?** → Read the chatbot examples (10 tasks, 45-line CLAUDE.md)
+- **Complex project?** → Read the kiro-sales examples (25 tasks, 60-line CLAUDE.md)
+
 ## Orchestration
 
 Run the sub-steps IN ORDER. Each produces one or more files. Pass context forward.
